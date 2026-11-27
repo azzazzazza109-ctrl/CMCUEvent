@@ -1,0 +1,7 @@
+@model EventListViewModel
+@{ ViewData["Title"]="Danh sách sự kiện"; }
+<h1>Danh sách sự kiện</h1><p class="muted">Tìm hoạt động phù hợp với bạn.</p>
+<partial name="_Filter" model="Model" />
+@if (Model.Items.Count==0) { <p class="empty">Không tìm thấy sự kiện phù hợp.</p> }
+<div class="event-grid">@foreach(var e in Model.Items) { <partial name="_EventCard" model="e" /> }</div>
+<partial name="_Pagination" model="Model" />
