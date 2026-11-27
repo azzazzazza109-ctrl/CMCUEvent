@@ -1,0 +1,4 @@
+@model EventForm
+@{ ViewData["Title"]="Sửa sự kiện"; }
+<section class="panel form-panel"><h1>Sửa sự kiện</h1><form asp-action="Edit" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data" id="event-form"><partial name="_EventForm" model="Model" /></form></section>
+@section Scripts { <script src="~/js/validation.js" asp-append-version="true"></script> }

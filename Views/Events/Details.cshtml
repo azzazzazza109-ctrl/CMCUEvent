@@ -1,0 +1,16 @@
+@model Event
+@{ ViewData["Title"] = Model.Name; var currentId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value; var registered=Model.Registrations.Any(r=>r.UserId==currentId && r.Status=="Registered"); }
+<a asp-action="Index">← Danh sách sự kiện</a>
+<div class="details">
+    <div><img class="detail-image" src="@Model.ImagePath" alt="Ảnh @Model.Name" /><h2>Giới thiệu sự kiện</h2><p class="description">@Model.Description</p></div>
+    <section class="panel"><span class="tag">@Model.Category.Name</span><h1>@Model.Name</h1>
+        <dl><dt>Bắt đầu</dt><dd>@Model.StartTime.ToString("dd/MM/yyyy HH:mm")</dd><dt>Kết thúc</dt><dd>@Model.EndTime.ToString("dd/MM/yyyy HH:mm")</dd><dt>Địa điểm</dt><dd>@Model.Location</dd><dt>Trạng thái</dt><dd id="event-status">@Model.DisplayStatus</dd><dt>Chỗ còn lại</dt><dd id="remaining">@Model.Remaining</dd></dl>
+        <button type="button" class="button secondary" id="refresh-availability" data-url="@Url.Action("Availability", "Events", new { id=Model.Id })">Cập nhật số chỗ</button><p id="availability-message" role="status"></p>
+        @if (registered) { <p class="notice success">Bạn đã đăng ký sự kiện này.</p><a asp-controller="Registrations" asp-action="Index" class="button">Xem đăng ký</a> }
+        else if (Model.DisplayStatus=="Đang mở") {
+            if (User.IsInRole("User")) { <form asp-controller="Registrations" asp-action="Create" method="post" data-confirm="Bạn muốn đăng ký sự kiện này?"><input type="hidden" name="eventId" value="@Model.Id" /><button type="submit" class="button">Đăng ký tham gia</button></form> }
+            else if (User.Identity?.IsAuthenticated != true) { <a class="button" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Url.Action("Details", "Events", new { id=Model.Id })">Đăng nhập để tham gia</a> }
+        } else { <p class="muted">Hiện không thể đăng ký sự kiện này.</p> }
+    </section>
+</div>
+@section Scripts { <script src="~/js/events.js" asp-append-version="true"></script> }
