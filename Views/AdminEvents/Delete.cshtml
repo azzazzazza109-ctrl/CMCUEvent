@@ -1,0 +1,3 @@
+@model Event
+@{ ViewData["Title"]="Xóa sự kiện"; }
+<section class="panel form-panel"><h1>Xóa sự kiện</h1><p>Bạn muốn xóa <strong>@Model.Name</strong>?</p><p class="muted">Chỉ xóa được sự kiện chưa có lịch sử đăng ký.</p><form asp-action="Delete" asp-route-id="@Model.Id" method="post"><button class="button danger" type="submit">Xác nhận xóa</button> <a class="button secondary" asp-action="Index">Quay lại</a></form></section>

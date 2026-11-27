@@ -1,0 +1,13 @@
+@model EventListViewModel
+@{ ViewData["Title"]="Quản lý sự kiện"; }
+<div class="heading"><div><h1>Quản lý sự kiện</h1><p class="muted">Thêm, sửa, xóa và theo dõi đăng ký.</p></div><a class="button" asp-action="Create">+ Thêm sự kiện</a></div>
+<partial name="_Filter" model="Model" />
+@if(Model.Items.Count==0) { <p class="empty">Không tìm thấy sự kiện.</p> }
+else { <div class="table-wrap event-admin-table" tabindex="0" role="region" aria-label="Bảng quản lý sự kiện"><table><thead><tr><th>Tên sự kiện</th><th>Danh mục</th><th>Bắt đầu</th><th>Đã đăng ký</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody>
+@foreach(var e in Model.Items) { <tr><td>@e.Name</td><td>@e.Category.Name</td><td>@e.StartTime.ToString("dd/MM/yyyy HH:mm")</td><td>@e.RegisteredCount / @e.MaxParticipants</td><td>@e.DisplayStatus</td><td><div class="actions"><a asp-action="Details" asp-route-id="@e.Id">Xem</a><a asp-action="Edit" asp-route-id="@e.Id">Sửa</a><a asp-action="Delete" asp-route-id="@e.Id">Xóa</a><a asp-action="Participants" asp-route-id="@e.Id">Người tham gia</a>
+@if(e.StartTime>DateTime.Now) {
+    if(e.Status=="Open") { <form asp-action="Close" asp-route-id="@e.Id" method="post"><button class="link-button" type="submit">Đóng</button></form> }
+    else { <form asp-action="Open" asp-route-id="@e.Id" method="post"><button class="link-button" type="submit">Mở</button></form> }
+}</div></td></tr> }
+</tbody></table></div> }
+<partial name="_Pagination" model="Model" />
