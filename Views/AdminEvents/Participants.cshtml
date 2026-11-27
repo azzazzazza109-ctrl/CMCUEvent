@@ -1,7 +1,0 @@
-@model Event
-@{ ViewData["Title"]="Danh sách người tham gia"; }
-<a asp-action="Index">← Quản lý sự kiện</a><h1>Người đăng ký</h1><h2>@Model.Name</h2><p>Đăng ký còn hiệu lực: @Model.RegisteredCount / @Model.MaxParticipants</p>
-@if(Model.Registrations.Count==0) { <p class="empty">Chưa có người đăng ký.</p> }
-else { <div class="table-wrap"><table><thead><tr><th>Họ tên</th><th>Email</th><th>Ngày đăng ký</th><th>Trạng thái</th></tr></thead><tbody>
-@foreach(var r in Model.Registrations.OrderByDescending(r=>r.RegisteredAt)) { <tr><td>@r.User.FullName</td><td>@r.User.Email</td><td>@r.RegisteredAt.ToString("dd/MM/yyyy HH:mm")</td><td>@(r.Status=="Registered" ? "Đã đăng ký" : "Đã hủy")</td></tr> }
-</tbody></table></div> }

@@ -1,2 +1,0 @@
-@model Category
-<div asp-validation-summary="All" class="validation"></div><label asp-for="Name">Tên danh mục</label><input asp-for="Name" required maxlength="100" /><span asp-validation-for="Name" class="validation"></span><label asp-for="Description">Mô tả</label><textarea asp-for="Description" maxlength="500" rows="4"></textarea><span asp-validation-for="Description" class="validation"></span><p><button type="submit" class="button">Lưu</button> <a class="button secondary" asp-action="Index">Quay lại</a></p>

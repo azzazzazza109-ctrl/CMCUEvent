@@ -1,9 +1,0 @@
-@model EventListViewModel
-<form class="filter" method="get" asp-action="Index">
-    <div><label for="keyword">Tìm kiếm theo tên</label><input id="keyword" name="keyword" value="@Model.Keyword" placeholder="Nhập tên sự kiện" /></div>
-    <div><label for="categoryId">Danh mục</label><select id="categoryId" name="categoryId"><option value="">Tất cả danh mục</option>
-        @foreach (var c in Model.Categories) { <option value="@c.Id" selected="@(c.Id==Model.CategoryId)">@c.Name</option> }
-    </select></div>
-    <button class="button" type="submit">Tìm kiếm</button><a class="button secondary" asp-action="Index">Xóa bộ lọc</a>
-</form>
-<p class="muted">@Model.TotalItems kết quả</p>
